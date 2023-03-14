@@ -1,0 +1,19 @@
+#Junk
+.vscode/
+*.a
+!lib.a
+/TODO
+
+# dependencies
+node_modules/
+
+# production
+build/
+
+# misc
+doc/*.txt
+doc/**/*.txt
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
