@@ -12,7 +12,6 @@ program.parse(process.argv);
 
 const argv = program.opts();
 
-// TODO: рефакторить
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
@@ -26,7 +25,8 @@ async function invokeAction({ action, id, name, email, phone }) {
       break;
 
     case "add":
-      console.log(contacts.addContact(name, email, phone));
+      const contactAdded = await contacts.addContact(name, email, phone);
+      console.log(contactAdded);
       break;
 
     case "remove":
