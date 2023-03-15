@@ -6,15 +6,11 @@ const contactsPath = path.join(__dirname, './db/contacts.json');
 
 async function listContacts() {
     try {
-        const list = await new Promise((resolve, reject) => {
-            fs.readFile(contactsPath, "utf-8", (err, list) => {
-                if (err) reject(err);
-                else resolve(list);
-            });
-        });
-        console.log(list);
-    } catch (error) {
-        console.error(error.message);
+        const list = await fs.readFile(contactsPath, "utf8");
+        const listJson = JSON.parse(list);
+        return listJson;
+    } catch (err) {
+        console.error(err.message);
     }
 }
 
@@ -27,7 +23,7 @@ async function getContactById(contactId) {
             });
         });
         if (contactId === "id") console.log(contact);
-        else console.log(`${contact.name} not found (-_-)`);
+        else console.log(`${contact} not found (-_-)`);
     } catch (error) {
         console.error(error.message);
     }
@@ -40,12 +36,12 @@ async function removeContact(contactId) {
                 if (err) {
                     reject(err);
                     return;
-                } else if (contactId === "id") {
+                } else if (contactId === id) {
                     console.log("File deleted successfully!");
                     resolve();
                 }
                 else {
-                    console.log(`${contact.name} not found (-_-)`);
+                    console.log(`${contact} not found (-_-)`);
                 }
             });
         });
