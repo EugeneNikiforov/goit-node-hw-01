@@ -27,22 +27,15 @@ async function getContactById(contactId) {
 
 async function removeContact(contactId) {
     try {
-        const contact = await new Promise((resolve, reject) => {
-            fs.unlink(contactsPath, (err) => {
-                if (err) {
-                    reject(err);
-                    return;
-                } else if (contactId === id) {
-                    console.log("File deleted successfully!");
-                    resolve();
-                }
-                else {
-                    console.log(`${contact} not found (-_-)`);
-                }
-            });
-        });
-        } catch (error) {
-        console.error(error.message);
+        const list = await listContacts();
+        const contact = String(contactId);
+        const index = list.findIndex((contactFound) => (contactFound.id === contact));
+        list.splice(index, 1);
+        await fs.writeFile(contactsPath, JSON.stringify(list, null, 2));
+        // console.log("Contact has been deleted *.*");
+        return `Contact with id=${contact} has been deleted *.*`;
+        } catch (err) {
+        console.error(err.message);
     }
 }
 
