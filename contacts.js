@@ -16,16 +16,12 @@ async function listContacts() {
 
 async function getContactById(contactId) {
     try {
-        const contact = await new Promise((resolve, reject) => {
-            fs.stat(contactsPath, (err, contact) => {
-                if (err) reject(err);
-                else resolve(contact);
-            });
-        });
-        if (contactId === "id") console.log(contact);
-        else console.log(`${contact} not found (-_-)`);
-    } catch (error) {
-        console.error(error.message);
+        const list = await listContacts();
+        const contact = String(contactId);
+        const contactFound = list.find((contactFound) => (contactFound.id === contact));
+        return contactFound;
+    } catch (err) {
+        console.error(err.message);
     }
 }
 
